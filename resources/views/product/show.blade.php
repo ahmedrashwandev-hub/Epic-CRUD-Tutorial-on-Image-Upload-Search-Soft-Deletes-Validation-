@@ -9,7 +9,7 @@
                 @endif
                 <p><strong>Name : </strong>{{ $product->name }}</p>
                 <p><strong>Description : </strong>{{ $product->description }}</p>
-                <p><strong>Price : </strong>{{ number_format($product->price, 2) }}</p>
+                <p><strong>Price : </strong>{{ number_format($product->price, 2) }} $</p>
                 <p><strong>Quantity : </strong>{{ $product->quantity }}</p>
                 <p><strong>Category : </strong>{{ $product->category->name ?? '-' }}</p>
                 <p><strong>Staus : </strong>
@@ -17,7 +17,7 @@
                         {{ ucfirst($product->status) }}
                     </span>
                 </p>
-                {{-- <a href="{{ route('product.edit' , $product )}}" class="btn btn-warning">Edit</a> --}}
+                {{-- <a href="{{ route('product.edit' , $product->id ) }}" class="btn btn-warning">Edit</a> --}}
                 <a href="{{ route('product.index' , $product )}}" class="btn btn-secondary">Back</a>
             </div>
         </div>

@@ -33,7 +33,7 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Product Name</th>
+                            <th scope="col" class="text-nowrap">Product Name</th>
                             <th scope="col">Category</th>
                             <th scope="col">Quantity</th>
                             <th scope="col">Price</th>
@@ -56,12 +56,12 @@
                                 <td>
                                     <form action="{{ route('product.restore',$product->id) }}" method="post" style="display:inline">
                                         @csrf @method('PUT')
-                                        <button onclick="return confirm('Are You Sure You Want To Delete This Product Permanently?')" class="btn btn-sm btn-info">Restore</button>
+                                        <button onclick="return confirm('Are You Sure ?')" class="btn btn-sm btn-info">Restore</button>
                                     </form>                                    
                                 <td>
                                     <form action="{{ route('product.delete',$product->id) }}" method="post" style="display:inline">
                                         @csrf @method('DELETE')
-                                        <button onclick="return confirm('Are You Sure?')" class="btn btn-sm btn-danger">Delete</button>
+                                        <button onclick="return confirm('Are You Sure Want To Delete This Product Permanently ?')" class="btn btn-sm btn-danger text-nowrap">Delete Permanently</button>
                                     </form>
                                 </td>
                             </tr>

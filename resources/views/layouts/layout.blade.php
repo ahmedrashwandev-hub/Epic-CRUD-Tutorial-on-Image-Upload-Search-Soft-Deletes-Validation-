@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>laravel 12 CRUD</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+      .navbar-nav .nav-link.active {
+        border: 2px solid #0d6efd;
+        border-radius: 5px;
+        padding: 5px 10px;
+      }
+
+      .navbar-nav .nav-link:hover {
+        border: 2px solid #0d6efd;
+        border-radius: 5px;
+        padding: 5px 10px;
+      }
+    </style>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -16,10 +29,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="products">Products</a>
+              <a class="nav-link {{ request()->routeIs('product.index') ? 'active' : '' }}" aria-current="page" href="{{ route('product.index') }}">Products</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="categories">Categories</a>
+              <a class="nav-link {{ request()->routeIs('product.addCategory') ? 'active' : '' }}" href="{{ route('product.addCategory') }}">Categories</a>
             </li>
           </ul>
         </div>

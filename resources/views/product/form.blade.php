@@ -8,7 +8,7 @@
 
 <div class="mb-3">
     <label class="form-label">Description</label>
-    <textarea type="text" name="description" class="form-control" required > {{ old('description', $product->description ?? '') }}"</textarea>
+    <textarea type="text" name="description" class="form-control" required >{{ old('description', $product->description ?? '') }}</textarea>
     @error('description')
         <span class="text-danger">{{ $message }}</span>
     @enderror
@@ -33,9 +33,17 @@
 <div class="mb-3">
     <label class="form-label">Category</label>
     <select name="category_id" class="form-control">
-            <option value="">{{ $product->category->name }}</option>
-        @foreach ($categories as $category)
-            <option value="{{ $category->id }}">{{ $category->name }}</option>    
+            @if (isset($product) && $product->category)
+                <option value="{{ $product->category->id }}">{{ $product->category->name }}</option>
+            @else
+                <option value="">Choose Category</option>
+            @endif
+
+            @foreach ($categories as $category)
+            {{-- @continue( $category->name == $product->category->name ) --}}
+            @if(!isset($product) || !$product->category || $category->id != $product->category->id)                
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+            @endif
         @endforeach
     </select>
     @error('category_id')

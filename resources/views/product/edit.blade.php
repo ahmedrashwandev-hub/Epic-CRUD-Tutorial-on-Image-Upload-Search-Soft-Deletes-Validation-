@@ -6,8 +6,9 @@
                 Edit Product
             </div>
             <div class="card-body">
-                <form action="{{ route('product.update', $product->id) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    @method('PUT')
                     @include('product.form')
                     <button type="submit" class="btn btn-primary">UpDate</button>
                     <a href="{{ route('product.index') }}" class="btn btn-secondary">Cancel</a>

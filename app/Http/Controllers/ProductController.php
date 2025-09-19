@@ -27,7 +27,6 @@ class ProductController extends Controller
         $categories = Category::all();
         return view("product.create" ,compact("categories"));
     }
-
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -37,7 +36,7 @@ class ProductController extends Controller
             "quantity"    => "required|numeric",
             "status"      => "required",
             "category_id" => "required",
-            "image"       => "nullable|image|mimes:jpg,png",
+            "image"       => "required|image|mimes:jpg,png",
         ]);
         if( $request->hasFile("image") ){
             $validated["image"] = $request->file("image")->store("products","public");
@@ -46,23 +45,27 @@ class ProductController extends Controller
 
         return redirect()->route("product.index")->with("success","Product Added Successfully");
     }
-
     public function show($id)
     {
-        $product = Product::find($id);
+        $product = Product::withTrashed()->find($id);
+        if(!$product)
+            {
+                return redirect()->route('product.index')
+                                 ->with('danger','product not found!');
+            }
         return view("product.show" ,compact("product"));
     }
 
     public function edit($id)
     {
         $categories = Category::all();
-        $product = Product::find($id);
+        $product = Product::withTrashed()->findOrFail($id);
         return view("product.edit" ,compact("product","categories","id"));
     }
 
     public function update(Request $request,$id)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::withTrashed()->findOrFail($id);
 
         $validated = $request->validate([
             "name"        => "required|string",
@@ -78,14 +81,14 @@ class ProductController extends Controller
                 Storage::disk("public")->delete( $product->image );
             $validated["image"] = $request->file("image")->store("products","public");
         }
-        Product::find($id)->update($validated);
+        Product::findOrFail($id)->update($validated);
         return redirect()->route("product.index")->with("success","Product Updated Successfully");
     }
 
     public function destroy($id)
     {
         Product::find($id)->delete();
-        return redirect()->route("product.index")->with("danger","Product Deleted Successfully");
+        return redirect()->route("product.index")->with("success","Product Deleted Successfully");
     }
 
     public function trashedProducts(Request $request)
@@ -115,7 +118,65 @@ class ProductController extends Controller
                 Storage::delete($product->image);
             }
         $product->forceDelete();
-        return redirect()->route("product.index")->with("danger","The Product Was Successfully Deleted Permanently");
+        return redirect()->route("product.index")->with("success","The Product Was Successfully Deleted Permanently");
+    }
+
+
+
+    public function listCategory(Request $request) 
+    {
+        $categories = Category::all();
+        // $Query = Product::query();
+        // if(request()->has("search") && $request->search)
+        //     {
+        //         $query = $Query->where("name","like","%".$request->search."%")
+        //                        ->orWhere("description","like","%".$request->search."%");
+        //     }
+            // $products = $Query->latest()->paginate(10);
+        return view("product.addCategory",compact("categories"));
+    }
+
+    public function addCategory()
+    {
+        $categories = Category::all();
+        return view("product.addCategory" ,compact("categories"));
+    }
+
+    public function storeCategory(Request $request)
+    {
+        $validated = $request->validate([
+            "name"        => "required|string",
+            "status"      => "required"
+        ]);
+        Category::create($validated);
+
+        return redirect()->route("product.addCategory")->with("success","Category Added Successfully");
+    }
+
+    public function destroyCategory($id)
+    {
+        Category::find($id)->forceDelete();
+        return redirect()->route("product.addCategory")->with("danger","Product Deleted Successfully");
+    }
+
+    public function editCategory($id)
+    {
+        $category = Category::findOrFail($id);
+        $categories = Category::all();
+        return view("product.addCategory" ,compact("category","id","categories"));
+    }
+
+
+    public function updateCategory(Request $request,$id)
+    {
+        $category = Category::withTrashed()->findOrFail($id);
+
+        $validated = $request->validate([
+            "name"        => "required|string",
+            "status"      => "required"
+        ]);
+        Category::findOrFail($id)->update($validated);
+        return redirect()->route("product.addCategory")->with("success","Product Updated Successfully");
     }
 
 

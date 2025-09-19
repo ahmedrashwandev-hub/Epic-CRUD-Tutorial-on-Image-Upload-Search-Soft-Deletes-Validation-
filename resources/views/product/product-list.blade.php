@@ -17,7 +17,7 @@
                                 </form>
                             </div>
                             <div class="col-md-6">
-                                <div class="raw">
+                                <div class="row">
                                     <div class="col">
                                         <a href="{{ route('product.trashed') }}" class="float-end btn btn-warning">Show Deleted</a>
                                     </div>
@@ -44,7 +44,7 @@
                             <th scope="col">Product Name</th>
                             <th scope="col">Category</th>
                             <th scope="col">Quantity</th>
-                            <th scope="col">Price</th>
+                            <th scope="col">Price ( $ )</th>
                             <th scope="col">Status</th>
                             <th scope="col">Description</th>
                         </tr>
@@ -57,7 +57,7 @@
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->category->name }}</td>
                                 <td>{{ $product->quantity }}</td>
-                                <td>{{ $product->price }}</td>
+                                <td>{{ $product->price }} $</td>
                                 <td>{{ $product->status }}</td>
                                 <td>{{ $product->description }}</td>
                                 <td><a href=" {{ route('product.show', $product->id) }} " class="btn btn-success btn-sm">Show</a></td>
