@@ -29,15 +29,13 @@ Route::delete('/delete-product/{id}',[ProductController::class,'destroyProduct']
 
 
 
-Route::get('/addCategory-product',[ProductController::class,'addCategory'])->name('product.addCategory');
+Route::get('/add-Category',[ProductController::class,'listAndAddCategory'])->name('category.addCategory');
 
-Route::post('/listCategory-product',[ProductController::class,'listCategory'])->name('product.listCategory');
+Route::put('/store-Category',[ProductController::class,'storeCategory'])->name('category.storeCategory');
 
-Route::put('/storeCategory-product',[ProductController::class,'storeCategory'])->name('product.storeCategory');
+Route::get('/edit-category/{id}',[ProductController::class,'editCategory'])->name('category.editCategory');
 
-Route::get('/edit-category/{id}',[ProductController::class,'editCategory'])->name('product.editCategory');
+Route::delete('/destroy-category/{id}',[ProductController::class,'destroyCategory'])->name('category.destroyCategory');
 
-Route::delete('/destroy-category/{id}',[ProductController::class,'destroyCategory'])->name('product.destroyCategory');
-
-Route::put('/update-category/{id}',[ProductController::class,'updateCategory'])->name('product.updateCategory');
+Route::put('/update-category/{id}',[ProductController::class,'updateCategory'])->name('category.updateCategory');
 

@@ -18,7 +18,7 @@
                     </span>
                 </p>
                 {{-- <a href="{{ route('product.edit' , $product->id ) }}" class="btn btn-warning">Edit</a> --}}
-                <a href="{{ route('product.index' , $product )}}" class="btn btn-secondary">Back</a>
+                <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
             </div>
         </div>
     </div>

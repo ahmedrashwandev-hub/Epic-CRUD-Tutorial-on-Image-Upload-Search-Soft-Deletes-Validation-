@@ -99,7 +99,7 @@ class ProductController extends Controller
                 $query = $Query->where("name","like","%".$request->search."%")
                                ->orWhere("description","like","%".$request->search."%");
             }
-            $products = $Query->paginate(5);
+            $products = $Query->orderBy("id", "desc")->paginate(5);
         return view("product.deleted-products" ,compact("products"));
     }
 
@@ -123,23 +123,14 @@ class ProductController extends Controller
 
 
 
-    public function listCategory(Request $request) 
-    {
-        $categories = Category::all();
-        // $Query = Product::query();
-        // if(request()->has("search") && $request->search)
-        //     {
-        //         $query = $Query->where("name","like","%".$request->search."%")
-        //                        ->orWhere("description","like","%".$request->search."%");
-        //     }
-            // $products = $Query->latest()->paginate(10);
-        return view("product.addCategory",compact("categories"));
-    }
 
-    public function addCategory()
+
+
+
+    public function listAndAddCategory(Request $request) 
     {
-        $categories = Category::all();
-        return view("product.addCategory" ,compact("categories"));
+        $categories = Category::orderBy("id", "desc")->paginate(5);
+        return view("category.addCategory",compact("categories"));
     }
 
     public function storeCategory(Request $request)
@@ -150,20 +141,20 @@ class ProductController extends Controller
         ]);
         Category::create($validated);
 
-        return redirect()->route("product.addCategory")->with("success","Category Added Successfully");
+        return redirect()->route("category.addCategory")->with("success","Category Added Successfully");
     }
 
     public function destroyCategory($id)
     {
         Category::find($id)->forceDelete();
-        return redirect()->route("product.addCategory")->with("danger","Product Deleted Successfully");
+        return redirect()->route("category.addCategory")->with("success","Product Deleted Successfully");
     }
 
     public function editCategory($id)
     {
         $category = Category::findOrFail($id);
-        $categories = Category::all();
-        return view("product.addCategory" ,compact("category","id","categories"));
+        $categories = Category::orderBy("id","desc")->paginate(5);
+        return view("category.addCategory" ,compact("category","id","categories"));
     }
 
 
@@ -176,7 +167,7 @@ class ProductController extends Controller
             "status"      => "required"
         ]);
         Category::findOrFail($id)->update($validated);
-        return redirect()->route("product.addCategory")->with("success","Product Updated Successfully");
+        return redirect()->route("category.addCategory")->with("success","Product Updated Successfully");
     }
 
 

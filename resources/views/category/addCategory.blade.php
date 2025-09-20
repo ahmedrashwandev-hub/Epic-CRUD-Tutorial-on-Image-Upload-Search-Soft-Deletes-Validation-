@@ -6,7 +6,7 @@
                 Add New Category
             </div>
             <div class="card-body">
-                <form action="{{ isset($category) ? route('product.updateCategory', $category->id) : route('product.storeCategory') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ isset($category) ? route('category.updateCategory', $category->id) : route('category.storeCategory') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method("PUT")
                     <div class="mb-3">
@@ -65,15 +65,8 @@
                                 {{-- <td><a href=" {{ route('product.show', $category->id) }} " class="btn btn-success btn-sm">Show</a></td> --}}
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center gap-2">
-                                        <a href=" {{ route('product.editCategory', $category->id) }} " class="btn btn-primary btn-sm">Edit</a>
-
-
-
-
-
-
-
-                                        <form action="{{ route('product.destroyCategory',$category->id) }}" method="post" style="display:inline">
+                                        <a href=" {{ route('category.editCategory', $category->id) }} " class="btn btn-primary btn-sm">Edit</a>
+                                        <form action="{{ route('category.destroyCategory',$category->id) }}" method="post" style="display:inline">
                                             @csrf 
                                             @method('DELETE')
                                             <button onclick="return confirm('Are You Sure?')" class="btn btn-sm btn-danger">Delete Permanently</button>
@@ -91,7 +84,7 @@
                         @endif
                     </tbody>
                 </table>
-                {{-- {{ $categories->links() }} --}}
+                {{ $categories->links() }}
             </div>
         </div>
     </div>
